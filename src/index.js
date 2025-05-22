@@ -16,7 +16,10 @@ const app = express();
 
 app.use(
     cors({
-        origin: ['http://localhost:3000', 'https://seu-frontend.vercel.app'], // coloque os domínios permitidos
+        origin: [
+            'http://localhost:3000',
+            'https://casamento-alicee-erick.vercel.app',
+        ], // coloque os domínios permitidos
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         credentials: true,
     })
