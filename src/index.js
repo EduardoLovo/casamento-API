@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const serverless = require('serverless-http'); // ✅ importante para Vercel
+
 const productRoutes = require('./routes/product.routes');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
@@ -27,7 +29,9 @@ app.use('/checkout', checkoutRoutes);
 app.use('/messages', mensageRoutes);
 app.use('/companions', companionRoutes);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//     console.log(`Servidor rodando em http://localhost:${PORT}`);
+// });
+
+module.exports.handler = serverless(app);
