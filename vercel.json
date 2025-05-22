@@ -12,6 +12,5 @@
             }
         }
     ],
-    "routes": [{ "src": "/(.*)", "dest": "src/index.js" }],
-    "buildCommand": "npx prisma generate"
+    "routes": [{ "src": "/(.*)", "dest": "src/index.js" }]
 }
