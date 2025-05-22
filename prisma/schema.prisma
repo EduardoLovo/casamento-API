@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  price     Float
+  image     String
+  qrcode    String?
+  codepix    String?
+  createdAt DateTime @default(now())
+
+  purchases Purchase[] // usuário pode ter várias compras
+}
+
+model User {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  email    String   @unique
+  password String
+  name     String
+  fone     String?
+  presence  Boolean?
+  role      String?   @default("common") // <- Aqui!
+
+  purchases Purchase[] // produto pode estar em várias compras
+  messages  Message[] // <- nova relação com mensagens
+  companions  Companion[]  // <- Aqui está a lista de convidados (guest)
+}
+
+model Companion {
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+
+model Purchase {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  productId String   @db.ObjectId
+  paymentMethod String
+  status     String   @default("confirmed") // confirmed, pending, canceled
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  COMMON
+}
