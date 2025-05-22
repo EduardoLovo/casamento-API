@@ -14,7 +14,14 @@ const companionRoutes = require('./routes/companion.route');
 dotenv.config();
 const app = express();
 
-app.use(cors());
+app.use(
+    cors({
+        origin: ['http://localhost:3000', 'https://seu-frontend.vercel.app'], // coloque os domínios permitidos
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        credentials: true,
+    })
+);
+
 app.use(express.json());
 
 app.get('/', async (req, res) => {
