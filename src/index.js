@@ -10,6 +10,7 @@ const purchasesRoutes = require('./routes/purchases.routes');
 const checkoutRoutes = require('./routes/checkout.routes');
 const mensageRoutes = require('./routes/message.routes');
 const companionRoutes = require('./routes/companion.route');
+const verifyRecaptcha = require('./routes/verifyRecaptcha.routes');
 
 dotenv.config();
 const app = express();
@@ -17,7 +18,7 @@ const app = express();
 app.use(
     cors({
         origin: [
-            'http://localhost:3000',
+            'http://localhost:3001',
             'https://casamento-alicee-erick.vercel.app',
             'https://www.aliceeerick.com.br',
         ], // coloque os domínios permitidos
@@ -39,10 +40,11 @@ app.use('/purchases', purchasesRoutes);
 app.use('/checkout', checkoutRoutes);
 app.use('/messages', mensageRoutes);
 app.use('/companions', companionRoutes);
+app.use('/verify-recaptcha', verifyRecaptcha);
 
 module.exports = app;
 module.exports.handler = serverless(app);
-
+// const port = 3000;
 // app.listen(port, () => {
 //     console.log(`Servidor rodando em http://localhost:${port}`);
 // });

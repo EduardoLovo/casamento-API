@@ -7,8 +7,8 @@ const {
 const authMiddleware = require('../middlewares/authMiddleware');
 const adminMiddleware = require('../middlewares/adminMiddleware');
 
-router.post('/', adminMiddleware, authMiddleware, createCompanion); // usuário envia mensagem
-router.get('/', adminMiddleware, getUserWithCompanion); // admin pode ver todas as mensagens
-router.get('/lista-de-confirmados', getUserWithCompanion); // admin pode ver todas as mensagens
+router.post('/', authMiddleware, createCompanion);
+router.get('/', authMiddleware, adminMiddleware, getUserWithCompanion);
+router.get('/lista-de-confirmados', getUserWithCompanion);
 
 module.exports = router;
